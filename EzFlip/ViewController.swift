@@ -16,10 +16,10 @@ class ViewController: UIViewController {
     var isFlip = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        draw1()
+        draw()
     }
     
-    func draw1(){
+    func draw(){
         let cellWidth = view.bounds.width/3
         for col in 0..<3{
             for row in 0..<3{
@@ -27,25 +27,17 @@ class ViewController: UIViewController {
                 rect.backgroundColor = UIColor.gray
                 rect.tag = tag+col*10+row
                 print(rect.tag)
-                //                fliped = UIView(frame: rect.bounds)
-                //                fliped.backgroundColor = UIColor.black
-                //                needFlip = UIView(frame: rect.bounds)
-                //                needFlip.backgroundColor = UIColor.gray
-                //                rect.addSubview(needFlip)
                 view.addSubview(rect)
             }
         }
     }
     
-    func flip1(){
+    func flip(){
         for rect in view.subviews{
             for col in 0..<3{
-                // delay(0.5 * Double(col), closure: {
                 for row in 0..<3{
-                    //self.delay(0.5 * Double(row), closure: {
                     if rect.tag == self.tag+col*10+row{
                         print(rect.tag)
-                        //print(rect.layer.isHidden)
                         delay(Double(col) * 1.5 + Double(row) * 0.5, closure: {
                             if self.isFlip == false {
                                 UIView.transition(with: rect, duration: 0.5, options: .transitionFlipFromRight, animations: {
@@ -55,7 +47,6 @@ class ViewController: UIViewController {
                                 })
                                 self.isFlip = true
                             }else {
-                                //print(rect.layer.isHidden)
                                 UIView.transition(with: rect, duration: 0.5, options: .transitionFlipFromRight, animations: {
                                     rect.backgroundColor = UIColor.gray
                                 }, completion: { (Bool) in
@@ -66,31 +57,17 @@ class ViewController: UIViewController {
                             
                         })
                     }
-                    //})
                 }
-                
-                // })
             }
         }
     }
     
-    func flip2(){
-        for rect in view.subviews{
-            for col in 0..<3{
-                for row in 0..<3{
-                    if rect.tag == tag+col*10+row{
-                        UIView.transition(from: needFlip, to: fliped, duration: 0.5, options: .transitionFlipFromRight, completion: nil)
-                    }
-                }
-            }
-        }
-    }
-    func delay(_ delay:Double, closure:@escaping ()->()){
+        func delay(_ delay:Double, closure:@escaping ()->()){
         let when = DispatchTime.now() + delay
         DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
     }
     @IBAction func act_Flip(_ sender: Any) {
-        flip1()
+        flip()
     }
     
 }
